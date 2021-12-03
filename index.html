@@ -1,0 +1,72 @@
+<html>
+    <head> </head>
+    <body>
+        <div class="wrapper">
+            <input type="text" id="Input" placeholder="put time in minutes" />
+            <div class="time">
+                <span class="hour"></span>
+                <span class="colon">:</span>
+                <span class="minute"></span>
+                <span class="colon">:</span>
+                <span class="second"></span>
+            </div>
+            <div class="buttons">
+                <button class="start">Start</button>
+                <button class="stop">Stop</button>
+                <button class="reset">Reset</button>
+            </div>
+        </div>
+
+        <script>
+            let hr = (min = sec = ms = "0" + 0),
+                startTimer;
+
+            const startBtn = document.querySelector(".start");
+            const stopBtn = document.querySelector(".stop");
+            const resetBtn = document.querySelector(".reset");
+
+            startBtn.addEventListener("click", () => {
+                ms = Number(Input.value) * 60;
+
+                startBtn.classList.add("active");
+                stopBtn.classList.remove("stopActive");
+
+                startTimer = setInterval(() => {
+                    if (ms > 0) {
+                        console.log(ms);
+                        ms -= 1;
+                        sec = Math.floor(ms) % 60;
+                        mn = Math.floor(ms / 60) % 60;
+                        hr = Math.floor(ms / (60 * 60));
+                        console.log(hr, mn, sec);
+                        putValue();
+                    } else {
+                        //
+                    }
+                }, 1000);
+            });
+
+            stopBtn.addEventListener("click", () => {
+                startBtn.classList.remove("active");
+                stopBtn.classList.add("stopActive");
+                clearInterval(startTimer);
+            });
+
+            resetBtn.addEventListener("click", () => {
+                startBtn.classList.remove("active");
+                stopBtn.classList.remove("stopActive");
+                clearInterval(startTimer);
+                hr = min = sec = ms = "0" + 0;
+                putValue();
+            });
+
+            const Input = document.getElementById("Input");
+
+            function putValue() {
+                document.querySelector(".second").innerText = sec;
+                document.querySelector(".minute").innerText = min;
+                document.querySelector(".hour").innerText = hr;
+            }
+        </script>
+    </body>
+</html>
